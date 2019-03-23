@@ -56,3 +56,4 @@ You may also setup an email server locally.  See "email.properties.localhost.sam
 
 ### AuthenticationSuccessHandler configuration for Custom Login Page article
 If you want to activate the configuration for the article [Custom Login Page for Returning User](http://www.baeldung.com/custom-login-page-for-returning-user), then you need to comment the @Component("myAuthenticationSuccessHandler") annotation in the MySimpleUrlAuthenticationSuccessHandler and uncomment the same in MyCustomLoginAuthenticationSuccessHandler.
+# KITPoint-System
