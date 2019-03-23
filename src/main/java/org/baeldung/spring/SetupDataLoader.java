@@ -68,19 +68,16 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    Faculty createFacultyIfNotFound(
-            final String name, String email, String address,String contact, String position, User user ){
-        Faculty faculty = facultyRepository.findFacultyByName(name);
-        if (faculty==null){
-            faculty = new Faculty();
-            faculty.setName(name);
-            faculty.setEmail(email);
-            faculty.setAddress(address);
-            faculty.setContact(contact);
-            faculty.setPosition(position);
-            faculty.setUser(user);
-        }
-        return facultyRepository.save(faculty);
+    void createFacultyIfNotFound(
+        final String name, String email, String address,String contact, String position, User user ){
+        Faculty  faculty = new Faculty();
+        faculty.setName(name);
+        faculty.setEmail(email);
+        faculty.setAddress(address);
+        faculty.setContact(contact);
+        faculty.setPosition(position);
+        faculty.setUser(user);
+        facultyRepository.save(faculty);
     }
 
 

@@ -3,9 +3,13 @@ package org.baeldung.service.kotlin
 import org.baeldung.persistence.dao.kotlin.FacultyRepository
 import org.baeldung.persistence.model.kotlin.Faculty
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import java.util.*
+import javax.transaction.Transactional
 
-class FacultyService : IFacultyService{
+@Service
+@Transactional
+open class FacultyService : IFacultyService{
 
     @Autowired
     private lateinit var facultyRepository:FacultyRepository
