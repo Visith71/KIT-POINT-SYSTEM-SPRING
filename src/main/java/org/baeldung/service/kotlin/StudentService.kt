@@ -12,7 +12,7 @@ import javax.transaction.Transactional
 open class StudentService : IStudentService{
 
     @Autowired
-    private lateinit var studentRepository : StudentRepository
+    lateinit var studentRepository : StudentRepository
 
 
     override fun saveStudent(student: Student){

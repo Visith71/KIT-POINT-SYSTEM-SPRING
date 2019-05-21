@@ -1,6 +1,5 @@
 package org.baeldung.spring;
 
-import org.baeldung.persistence.dao.UserRepository;
 import org.baeldung.security.CustomRememberMeServices;
 import org.baeldung.security.google2fa.CustomAuthenticationProvider;
 import org.baeldung.security.google2fa.CustomWebAuthenticationDetailsSource;
@@ -47,9 +46,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
 
-    @Autowired
-    private UserRepository userRepository;
-
     public SecSecurityConfig() {
         super();
     }
@@ -62,50 +58,55 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider());
     }
 
     @Override
-    public void configure(final WebSecurity web) throws Exception {
+    public void configure(final WebSecurity web) {
         web.ignoring().antMatchers("/resources/**");
     }
+
+    private static final String[] SUPER_ADMIN_MATCHERS = {
+            "/students","/batches","/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
+            "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
+            "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
+            "/user/changePassword*", "/emailError*", "/resources/**","/old/user/registration*","/successRegister*","/qrcode*"
+    };
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
         http
-            .csrf().disable()
-            .authorizeRequests()
-                .antMatchers("/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
-                        "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
-                        "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
-                        "/user/changePassword*", "/emailError*", "/resources/**","/old/user/registration*","/successRegister*","/qrcode*").permitAll()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers(SUPER_ADMIN_MATCHERS).permitAll()
                 .antMatchers("/invalidSession*").anonymous()
-                .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
+                .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*")
+                .hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                 .anyRequest().hasAuthority("READ_PRIVILEGE")
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/homepage.html")
                 .failureUrl("/login?error=true")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .authenticationDetailsSource(authenticationDetailsSource)
-            .permitAll()
+                .permitAll()
                 .and()
-            .sessionManagement()
+                .sessionManagement()
                 .invalidSessionUrl("/invalidSession.html")
                 .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
                 .sessionFixation().none()
-            .and()
-            .logout()
+                .and()
+                .logout()
                 .logoutSuccessHandler(myLogoutSuccessHandler)
                 .invalidateHttpSession(false)
                 .logoutSuccessUrl("/logout.html?logSucc=true")
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-             .and()
+                .and()
                 .rememberMe().rememberMeServices(rememberMeServices()).key("theKey");
     // @formatter:on
     }
@@ -132,7 +133,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public RememberMeServices rememberMeServices() {
-        CustomRememberMeServices rememberMeServices = new CustomRememberMeServices("theKey", userDetailsService, new InMemoryTokenRepositoryImpl());
-        return rememberMeServices;
+        return new CustomRememberMeServices("theKey", userDetailsService, new InMemoryTokenRepositoryImpl());
     }
 }
