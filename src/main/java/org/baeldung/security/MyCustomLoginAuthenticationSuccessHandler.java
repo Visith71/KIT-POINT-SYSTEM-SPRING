@@ -25,7 +25,9 @@ public class MyCustomLoginAuthenticationSuccessHandler implements Authentication
     ActiveUserStore activeUserStore;
 
     @Override
-    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(final HttpServletRequest request,
+                                        final HttpServletResponse response,
+                                        final Authentication authentication) throws IOException {
         addWelcomeCookie(gerUserName(authentication), response);
         redirectStrategy.sendRedirect(request, response, "/homepage.html?user=" + authentication.getName());
 
@@ -33,12 +35,10 @@ public class MyCustomLoginAuthenticationSuccessHandler implements Authentication
         if (session != null) {
             session.setMaxInactiveInterval(30 * 60);
             String username;
-            if (authentication.getPrincipal() instanceof User) {
+            if (authentication.getPrincipal() instanceof User)
             	username = ((User)authentication.getPrincipal()).getEmail();
-            }
-            else {
+            else
             	username = authentication.getName();
-            }
        
             LoggedUser user = new LoggedUser(username, activeUserStore);
             session.setAttribute("user", user);

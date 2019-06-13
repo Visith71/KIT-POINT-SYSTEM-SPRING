@@ -32,19 +32,19 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     private DeviceService deviceService;
 
     @Override
-    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(final HttpServletRequest request,
+                                        final HttpServletResponse response,
+                                        final Authentication authentication) throws IOException {
         handle(request, response, authentication);
         final HttpSession session = request.getSession(false);
         if (session != null) {
             session.setMaxInactiveInterval(30 * 60);
 
             String username;
-            if (authentication.getPrincipal() instanceof User) {
+            if (authentication.getPrincipal() instanceof User)
             	username = ((User)authentication.getPrincipal()).getEmail();
-            }
-            else {
+            else
             	username = authentication.getName();
-            }
             LoggedUser user = new LoggedUser(username, activeUserStore);
             session.setAttribute("user", user);
         }
@@ -66,7 +66,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
     }
 
-    protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
+    private void handle(final HttpServletRequest request,
+                        final HttpServletResponse response,
+                        final Authentication authentication) throws IOException {
         final String targetUrl = determineTargetUrl(authentication);
 
         if (response.isCommitted()) {
@@ -76,7 +78,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
-    protected String determineTargetUrl(final Authentication authentication) {
+    private String determineTargetUrl(final Authentication authentication) {
         boolean isUser = false;
         boolean isAdmin = false;
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -100,13 +102,13 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
             return "/homepage.html?user="+username;
         } else if (isAdmin) {
-            return "/console.html";
+            return "/layout.html";
         } else {
             throw new IllegalStateException();
         }
     }
 
-    protected void clearAuthenticationAttributes(final HttpServletRequest request) {
+    private void clearAuthenticationAttributes(final HttpServletRequest request) {
         final HttpSession session = request.getSession(false);
         if (session == null) {
             return;

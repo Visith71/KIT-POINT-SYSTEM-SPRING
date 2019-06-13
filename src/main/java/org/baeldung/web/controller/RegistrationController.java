@@ -217,9 +217,18 @@ public class RegistrationController {
         // request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
     }
 
-    public void authWithoutPassword(User user) {
-        List<Privilege> privileges = user.getRoles().stream().map(Role::getPrivileges).flatMap(Collection::stream).distinct().collect(Collectors.toList());
-        List<GrantedAuthority> authorities = privileges.stream().map(p -> new SimpleGrantedAuthority(p.getName())).collect(Collectors.toList());
+    private void authWithoutPassword(User user) {
+        List<Privilege> privileges = user
+            .getRoles()
+            .stream()
+            .map(Role::getPrivileges)
+            .flatMap(Collection::stream)
+            .distinct()
+            .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = privileges
+          .stream()
+          .map(p -> new SimpleGrantedAuthority(p.getName()))
+          .collect(Collectors.toList());
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header">Header</div>
+<!--<div th:replace="${view} :: content">Page Content</div>-->
+<div th:replace="console :: content">Page Content</div>
+<div th:replace="fragments/footer :: footer">Footer</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</body>
+</html>
