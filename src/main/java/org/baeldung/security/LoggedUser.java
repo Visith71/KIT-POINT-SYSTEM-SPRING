@@ -28,15 +28,15 @@ public class LoggedUser implements HttpSessionBindingListener {
         if (!users.contains(user.getUsername())) {
             users.add(user.getUsername());
         }
+        System.out.println("bound---------------- "+users);
     }
 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         List<String> users = activeUserStore.getUsers();
         LoggedUser user = (LoggedUser) event.getValue();
-        if (users.contains(user.getUsername())) {
-            users.remove(user.getUsername());
-        }
+        System.out.println("unbound---------------- "+users);
+        users.remove(user.getUsername());
     }
 
     public String getUsername() {

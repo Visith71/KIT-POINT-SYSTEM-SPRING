@@ -1,13 +1,9 @@
 package org.baeldung.persistence.model;
 
-import java.util.Collection;
-import java.util.Set;
+import org.jboss.aerogear.security.otp.api.Base32;
 
 import javax.persistence.*;
-
-import org.baeldung.persistence.model.kotlin.Faculty;
-import org.baeldung.persistence.model.kotlin.Student;
-import org.jboss.aerogear.security.otp.api.Base32;
+import java.util.Collection;
 
 @Entity
 @Table(name = "user_account")
@@ -33,11 +29,11 @@ public class User {
 
     private String secret;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Faculty> faculties;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Student>students;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+//    private Set<Faculty> faculties;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+//    private Set<Student>students;
 
 
     //
@@ -124,22 +120,6 @@ public class User {
         this.secret = secret;
     }
 
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
-
-    public Set<Faculty> getFaculties() {
-        return faculties;
-    }
-
-    public void setFaculties(Set<Faculty> faculties) {
-        this.faculties = faculties;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -166,12 +146,18 @@ public class User {
         return true;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("User [id=").append(id).append(", firstName=").append(firstName).append(", lastName=").append(lastName).append(", email=").append(email).append(", password=").append(password).append(", enabled=").append(enabled).append(", isUsing2FA=")
-                .append(isUsing2FA).append(", secret=").append(secret).append(", roles=").append(roles).append("]");
-        return builder.toString();
-    }
-
+  @Override
+  public String toString() {
+    return "User{" +
+      "id=" + id +
+      ", firstName='" + firstName + '\'' +
+      ", lastName='" + lastName + '\'' +
+      ", email='" + email + '\'' +
+      ", password='" + password + '\'' +
+      ", enabled=" + enabled +
+      ", isUsing2FA=" + isUsing2FA +
+      ", secret='" + secret + '\'' +
+      ", roles=" + roles +
+      '}';
+  }
 }

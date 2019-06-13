@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Students</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <title th:text="#{label.pages.home.title}">home</title>
 </head>
 
 <body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/homepage.html}" th:text="#{label.pages.home.title}">home</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/logout}" th:text="#{label.pages.logout}">logout</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
-    <h2>Currently logged in users</h2>
     <div class="card table-responsive-sm">
         <table class="table table-sm">
             <tr class="table-info">
@@ -23,20 +27,20 @@
                 <th>Email</th>
             </tr>
             <tbody >
-            <tr>
-                <td>
-                    <p th:text="${student.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${student.batch.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${student.rank.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${student.user.email}"></p>
-                </td>
-            </tr>
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.batch.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.rank.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.user.email}"></p>-->
+<!--                </td>-->
+<!--            </tr>-->
             </tbody>
         </table>
     </div>
@@ -49,22 +53,22 @@
                 <td>Start date</td>
                 <td>End date</td>
             </tr>
-            <tbody th:each="task:${tasks}">
-            <tr>
-                <td>
-                    <p th:text="${task.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${task.student.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${task.start_date}"></p>
-                </td>
-                <td>
-                    <p th:text="${task.end_date}"></p>
-                </td>
-            </tr>
-            </tbody>
+<!--            <tbody th:each="task:${tasks}">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <p th:text="${task.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${task.student.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${task.start_date}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${task.end_date}"></p>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
         </table>
     </div>
 
@@ -99,22 +103,22 @@
                 <th>Rank</th>
                 <th>Email</th>
             </tr>
-            <tbody th:each="student:${members}">
-            <tr>
-                <td>
-                    <p th:text="${student.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${student.batch.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${student.rank.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${student.user.email}"></p>
-                </td>
-            </tr>
-            </tbody>
+<!--            <tbody th:each="student:${members}">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.batch.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.rank.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${student.user.email}"></p>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
         </table>
     </div>
 
@@ -126,49 +130,22 @@
                 <th>Leader</th>
                 <th>Coordinator</th>
             </tr>
-            <tbody th:each="project:${projects}">
-            <tr>
-                <td>
-                    <p th:text="${project.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${project.code}"></p>
-                </td>
-                <td>
-                    <p th:text="${project.student.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${project.faculty.name}"></p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="card table-responsive-sm">
-        <table class="table table-sm">
-            <tr class="table-info">
-                <td>Name</td>
-                <th>Code</th>
-                <th>Leader</th>
-                <th>Coordinator</th>
-            </tr>
-            <tbody th:each="project:${projects1}">
-            <tr>
-                <td>
-                    <p th:text="${project.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${project.code}"></p>
-                </td>
-                <td>
-                    <p th:text="${project.student.name}"></p>
-                </td>
-                <td>
-                    <p th:text="${project.faculty.name}"></p>
-                </td>
-            </tr>
-            </tbody>
+<!--            <tbody th:each="project:${projects}">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <p th:text="${project.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${project.code}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${project.student.name}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p th:text="${project.faculty.name}"></p>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
         </table>
     </div>
 

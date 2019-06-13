@@ -1,17 +1,19 @@
 package org.baeldung.spring;
 
-import java.util.*;
-
-import org.baeldung.persistence.dao.*;
-import org.baeldung.persistence.dao.kotlin.FacultyRepository;
-import org.baeldung.persistence.model.*;
-import org.baeldung.persistence.model.kotlin.Faculty;
+import org.baeldung.persistence.dao.PrivilegeRepository;
+import org.baeldung.persistence.dao.RoleRepository;
+import org.baeldung.persistence.dao.UserRepository;
+import org.baeldung.persistence.model.Privilege;
+import org.baeldung.persistence.model.Role;
+import org.baeldung.persistence.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -29,9 +31,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private FacultyRepository facultyRepository;
 
     // API
 
@@ -58,26 +57,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         User user = createUserIfNotFound("admin@kit.edu.kh", "Admin",
                 "KIT", "test", new ArrayList<>(Collections.singletonList(adminRole)));
 
-        createFacultyIfNotFound(
-                "Admin","admin@kit.edu.kh","098765432",
-                "Kom Pong Spuer","Back office admin",
-                user);
-
 
         alreadySetup = true;
-    }
-
-    @Transactional
-    void createFacultyIfNotFound(
-        final String name, String email, String address,String contact, String position, User user ){
-        Faculty  faculty = new Faculty();
-        faculty.setName(name);
-        faculty.setEmail(email);
-        faculty.setAddress(address);
-        faculty.setContact(contact);
-        faculty.setPosition(position);
-        faculty.setUser(user);
-        facultyRepository.save(faculty);
     }
 
 
