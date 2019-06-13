@@ -93,6 +93,7 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
         resolver.setViewNames(ArrayUtil.array("*.js"));
         return resolver;
     }
+
     private ITemplateResolver javascriptTemplateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
